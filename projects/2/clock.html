@@ -3,22 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Clock</title>
-</head>
-<body>
-
-
-    <div class="clock">
-      <div class="clock-face">
-        <img class="clock-background" src="clock.png"/>
-        <div class="hand hour-hand"></div>
-        <div class="hand min-hand"></div>
-        <div class="hand second-hand"></div>
-
-        <div class="center-pin"></div>
-      </div>
-    </div>
-
-
+  <link rel="stylesheet" href="../../assets/css/font-awesome.min.css">
   <style>
     html {
       /* background:#018DED url(http://unsplash.it/1500/1000?image=881&blur=50); */
@@ -32,13 +17,28 @@
     }
 
     body {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #fff;
+      font-size: 18px;
+    }
+
+    main {
       margin: 0;
       font-size: 2rem;
       display:flex;
       flex:1;
       min-height: 100vh;
       align-items: center;
-      background: rgba(0, 0, 0, 0.8);
     }
 
     .clock {
@@ -95,7 +95,6 @@
       background: #666;
     }
 
-
     .center-pin {
       margin: 0;
       padding: 0;
@@ -110,6 +109,33 @@
     }
 
   </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="../1/drum-kit.html">
+      <span><i class="fa fa-arrow-left" aria-hidden="true"></i> BACK</span>
+    </a>
+
+    <a href="../../index.html">
+      <span><i class="fa fa-home" aria-hidden="true"></i> HOME</span>
+    </a>
+
+    <a href="../2/clock.html">
+      <span>NEXT <i class="fa fa-arrow-right"></i></span>
+    </a>
+  </nav>
+  <main>
+    <div class="clock">
+      <div class="clock-face">
+        <img class="clock-background" src="clock.png"/>
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+
+        <div class="center-pin"></div>
+      </div>
+    </div>
+  </main>
 
   <script>
     const hands = document.querySelectorAll('.hand');
@@ -129,7 +155,7 @@
       minHand.style.transform = `rotate(${minsDegrees}deg)`;
 
       const hours = now.getHours();
-      const hoursDegrees = ((hours / 12) * 360) + 90;
+      const hoursDegrees = ((hours / 12) * 360 + (mins / 60) * 360 / 12) + 90;
       hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
 
     }
