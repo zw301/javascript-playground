@@ -1,6 +1,9 @@
 # JavaScript Wonderland
 
-30 Day Vanilla JS Coding Challenge. [LIVE](https://zw301.github.io/javascript-wonderland/)
+30 Day Vanilla JS Coding Challenge.
+
+[LIVE](https://zw301.github.io/javascript-wonderland/)
+
 
 
 ```JS
