@@ -11,12 +11,12 @@
 
     html {
       font-family: sans-serif;
-      background:#D5C6E0;
+      background: #D5C6E0;
     }
 
     .inbox {
       max-width:400px;
-      margin:50px auto;
+      margin:0px auto;
       background:white;
       border-radius:5px;
       box-shadow:10px 10px 0 rgba(0,0,0,0.1);
@@ -25,7 +25,21 @@
     .item {
       display:flex;
       align-items:center;
+      justify-content: center;
       border-bottom: 1px solid #F1F1F1;
+    }
+
+    .item h1 {
+      font-size: 24px;
+      font-weight: 200;
+    }
+
+    .item.nav {
+      color: #8389B4;
+      padding: 10px 16px;
+      font-weight: 200;
+      display: flex;
+      justify-content: space-between;
     }
 
     .item:last-child {
@@ -40,6 +54,13 @@
 
     input[type="checkbox"] {
       margin:20px;
+      /* display: none; */
+    }
+
+    .delete {
+      margin: 20px 18px;
+      font-size: 12px;
+      display: none;
     }
 
     label {
@@ -53,7 +74,30 @@
       border-left: 1px solid #D1E2FF;
     }
 
+    .new-item {
+      display: flex;
+      justify-content: space-between;
 
+    }
+
+    #new-todo {
+      border: none;
+      padding: 20px;
+      flex: 6;
+      font-size: 18px;
+      font-weight: 200;
+      outline: none;
+    }
+
+    #add {
+      flex: 1;
+      padding: 20px;
+      border: none;
+      font-size: 16px;
+      font-weight: 200;
+      outline: none;
+      color: #8389B4;
+    }
   </style>
    <!--
    The following is a common layout you would see in an email client.
@@ -76,46 +120,88 @@
   </nav>
   <div class="inbox">
     <div class="item">
+      <h1>My Todo List</h1>
+    </div>
+    <div class="item nav">
+      <span id="edit">Edit</span>
+      <span id="todo-count"></span>
+    </div>
+
+    <div class="item">
+      <span class="delete">❌</span>
       <input type="checkbox">
       <label>This is an inbox layout.</label>
     </div>
     <div class="item">
+      <span class="delete">❌</span>
       <input type="checkbox">
       <label>Check one item</label>
     </div>
     <div class="item">
+      <span class="delete">❌</span>
       <input type="checkbox">
       <label>Hold down your Shift key</label>
     </div>
     <div class="item">
+      <span class="delete">❌</span>
       <input type="checkbox">
       <label>Check a lower item</label>
     </div>
     <div class="item">
+      <span class="delete">❌</span>
       <input type="checkbox">
       <label>Everything inbetween should also be set to checked</label>
     </div>
     <div class="item">
+      <span class="delete">❌</span>
       <input type="checkbox">
-      <label>Try do it without any libraries</label>
+      <label>Without any libraries</label>
     </div>
     <div class="item">
+      <span class="delete">❌</span>
       <input type="checkbox">
       <label>Just regular JavaScript</label>
     </div>
     <div class="item">
+      <span class="delete">❌</span>
       <input type="checkbox">
       <label>Have fun!</label>
+    </div>
+
+    <div class="item new-item">
+      <input id="new-todo" type="text" placeholder="Enter new todo here" />
+      <input id="add" type="button" value="ADD" />
     </div>
 
   </div>
 
 <script>
-  const checkboxes = document.querySelectorAll(".inbox input[type=checkbox]");
+
+  let checkboxes = document.querySelectorAll(".inbox input[type=checkbox]");
   const labels = document.querySelectorAll(".inbox label");
-  // console.log(labels)
+
+  const count = document.querySelector("#todo-count");
+  const editBtn = document.querySelector("#edit");
+
+  let deleteBtns = document.querySelectorAll(".delete");
+
+  const newTodo = document.querySelector("#new-todo");
+  const addBtn = document.querySelector("#add");
+  const newItem = document.querySelectorAll(".new-item")[0];
+
+  const inboxAll = document.querySelector(".inbox");
+
+
+
 
   let lastChecked;
+
+  function countTodo() {
+    checkboxes = document.querySelectorAll(".inbox input[type=checkbox]");
+    count.innerHTML = checkboxes.length;
+  }
+
+  countTodo();
 
   function handleCheck(e) {
     // Check if they had the shift key down
@@ -137,14 +223,77 @@
     lastChecked = this;
   }
 
-  checkboxes.forEach(checkbox => checkbox.addEventListener("click", handleCheck))
+  checkboxes.forEach(checkbox => checkbox.addEventListener("click", handleCheck));
 
-  // labels.forEach(label => label.addEventListener("click", function() {
-  //   let oDiv = label.parentNode;
-  //   let checkbox = oDiv.querySelector("input[type='checkbox']");
-  //   // checkbox.click();
-  //   checkbox.dispatchEvent(click);
-  // }))
+  let done = false;
+  function editTodo() {
+    if (!done) {
+      newItem.style.display = "none";
+      checkboxes.forEach(checkbox => checkbox.style.display = "none");
+      deleteBtns.forEach(deleteBtn => deleteBtn.style.display = "block");
+      editBtn.innerHTML = "Done";
+      done = true;
+    } else {
+      newItem.style.display = "flex";
+      checkboxes.forEach(checkbox => checkbox.style.display = "block");
+      deleteBtns.forEach(deleteBtn => deleteBtn.style.display = "none");
+      editBtn.innerHTML = "Edit";
+      done = false;
+    }
+  }
+
+  function deleteTodo(obj) {
+    let parentDiv = obj.parentNode;
+    parentDiv.remove();
+    countTodo();
+  }
+
+  function addTodo() {
+    let html = newTodo.value;
+    if (html === "") {
+      alert("Your todo list must have content");
+      return;
+    }
+
+    // <div class="item">
+    //   <span class="delete">❌</span>
+    //   <input type="checkbox">
+    //   <label>Have fun!</label>
+    // </div>
+
+    let oDiv = document.createElement('div');
+    oDiv.className = "item";
+
+    let oSpan = document.createElement("span");
+    oSpan.className = "delete";
+    oSpan.innerHTML = "❌";
+
+    let oInput = document.createElement("input");
+    oInput.type = "checkbox";
+
+    let oLabel = document.createElement("label");
+    oLabel.innerHTML = html;
+
+    oDiv.appendChild(oSpan);
+    oDiv.appendChild(oInput);
+    oDiv.appendChild(oLabel);
+
+    inboxAll.insertBefore(oDiv, newItem);
+
+    newTodo.value = "";
+    countTodo();
+
+    deleteBtns = document.querySelectorAll(".delete");
+    let newDelete = deleteBtns[deleteBtns.length - 1];
+    newDelete.addEventListener("click", () => deleteTodo(newDelete));
+  }
+
+  deleteBtns.forEach(deleteBtn => deleteBtn.addEventListener("click", () => deleteTodo(deleteBtn)));
+
+
+  editBtn.addEventListener("click", editTodo);
+  addBtn.addEventListener("click", addTodo);
+
 </script>
 </body>
 </html>
