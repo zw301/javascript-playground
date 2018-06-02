@@ -70,7 +70,7 @@
       <span><i class="fa fa-home" aria-hidden="true"></i> HOME</span>
     </a>
 
-    <a href="../10/multi-check.html">
+    <a href="../11/video-player.html">
       <span>NEXT <i class="fa fa-arrow-right"></i></span>
     </a>
   </nav>
@@ -116,7 +116,7 @@
 <script>
   const checkboxes = document.querySelectorAll(".inbox input[type=checkbox]");
   const labels = document.querySelectorAll(".inbox label");
-  console.log(labels)
+  // console.log(labels)
 
   let lastChecked;
 
@@ -141,10 +141,12 @@
   }
 
   checkboxes.forEach(checkbox => checkbox.addEventListener("click", handleCheck))
+
   // labels.forEach(label => label.addEventListener("click", function() {
   //   let oDiv = label.parentNode;
   //   let checkbox = oDiv.querySelector("input[type='checkbox']");
-  //   checkbox.click();
+  //   // checkbox.click();
+  //   checkbox.dispatchEvent(click);
   // }))
 </script>
 </body>
