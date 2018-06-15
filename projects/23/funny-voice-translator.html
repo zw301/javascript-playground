@@ -22,26 +22,28 @@
         <span>NEXT <i class="fa fa-arrow-right"></i></span>
       </a>
     </nav>
-    <div class="voiceinator">
+    <main>
+      <div class="voiceinator">
 
-      <h1>Funny Voice Translator</h1>
+        <h1>Funny Voice Translator</h1>
 
-      <label class="input-title">Choose A Language</label>
-      <select name="voice" id="voices">
-        <option value="">Select A Voice</option>
-      </select>
+        <label class="input-title">Choose A Language</label>
+        <select name="voice" id="voices">
+          <option value="">Select A Voice</option>
+        </select>
 
-      <label for="rate" class="input-title">Rate:</label>
-      <input name="rate" type="range" min="0" max="3" value="1" step="0.1">
+        <label for="rate" class="input-title">Rate:</label>
+        <input name="rate" type="range" min="0" max="3" value="1" step="0.1">
 
-      <label for="pitch" class="input-title">Pitch:</label>
+        <label for="pitch" class="input-title">Pitch:</label>
 
-      <input name="pitch" type="range" min="0" max="2" step="0.1">
-      <textarea name="text">Hello! I love JavaScript 👍</textarea>
-      <button id="stop">Stop!</button>
-      <button id="speak">Speak</button>
+        <input name="pitch" type="range" min="0" max="2" step="0.1">
+        <textarea name="text">Hello! I love JavaScript 👍</textarea>
+        <button id="stop">Stop!</button>
+        <button id="speak">Speak</button>
 
-    </div>
+      </div>
+    </main>
 
 <script>
   const msg = new SpeechSynthesisUtterance();
