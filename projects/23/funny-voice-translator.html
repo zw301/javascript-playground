@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Speech Synthesis</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="../../assets/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../../assets/css/global.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+      <a href="../15/menu-with-memory.html">
+        <span><i class="fa fa-arrow-left" aria-hidden="true"></i> BACK</span>
+      </a>
+
+      <a href="../../index.html">
+        <span><i class="fa fa-home" aria-hidden="true"></i> HOME</span>
+      </a>
+
+      <a href="#">
+        <span>NEXT <i class="fa fa-arrow-right"></i></span>
+      </a>
+    </nav>
+    <div class="voiceinator">
+
+      <h1>Funny Voice Translator</h1>
+
+      <label class="input-title">Choose A Language</label>
+      <select name="voice" id="voices">
+        <option value="">Select A Voice</option>
+      </select>
+
+      <label for="rate" class="input-title">Rate:</label>
+      <input name="rate" type="range" min="0" max="3" value="1" step="0.1">
+
+      <label for="pitch" class="input-title">Pitch:</label>
+
+      <input name="pitch" type="range" min="0" max="2" step="0.1">
+      <textarea name="text">Hello! I love JavaScript 👍</textarea>
+      <button id="stop">Stop!</button>
+      <button id="speak">Speak</button>
+
+    </div>
+
+<script>
+  const msg = new SpeechSynthesisUtterance();
+  let voices = [];
+  const voicesDropdown = document.querySelector('[name="voice"]');
+  const options = document.querySelectorAll('[type="range"], [name="text"]');
+  const speakButton = document.querySelector('#speak');
+  const stopButton = document.querySelector('#stop');
+
+  msg.text = document.querySelector("[name='text']").value;
+
+  function populateVoices() {
+    voices = this.getVoices();
+
+    voicesDropdown.innerHTML = voices
+      // .filter(voice => voice.lang.includes("en"))
+      .map(voice => `<option value="${voice.name}">${voice.name} (${voice.lang}) </option>`)
+      .join("");
+  }
+
+  function setVoice() {
+    msg.voice = voices.find(voice => voice.name === this.value);
+    toggle();
+  }
+
+  function toggle(startOver = true) {
+    speechSynthesis.cancel();
+    if (startOver) {
+      speechSynthesis.speak(msg);
+    }
+  }
+
+  function setOption() {
+    msg[this.name] = this.value;
+    toggle();
+  }
+
+  speechSynthesis.addEventListener("voiceschanged", populateVoices);
+  voicesDropdown.addEventListener('change', setVoice);
+
+  options.forEach(option => option.addEventListener('change', setOption));
+
+  speakButton.addEventListener("click", toggle);
+  stopButton.addEventListener("click", () => toggle(false));
+  // stopButton.addEventListener("click", toggle.bind(null, false));
+
+
+
+</script>
+
+</body>
+</html>
