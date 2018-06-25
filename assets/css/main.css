@@ -2726,9 +2726,12 @@
 					opacity: 0;
 				}
 
-					.tiles article > a .content > :last-child {
-						margin-bottom: 0;
-					}
+				.tiles article > a .content p {
+					margin: 20px;
+				}
+				.tiles article > a .content > :last-child {
+					margin-bottom: 0;
+				}
 
 			.tiles article.style1 > .image:before {
 				background-color: #f2849e;
