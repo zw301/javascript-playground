@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Reveal Image on mouseover</title>
+	<style>
+		#wrap {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+      transform: translate(-260px, -286px);
+		}
+
+		#wrap .tile {
+			opacity: 0.2;
+			transition: 0.5s;
+			width: 50px;
+			height: 50px;
+			position: absolute;
+
+		}
+
+
+	</style>
+	<script>
+		window.onload = function(){
+			const oWrap = document.getElementById('wrap');
+			const	aDiv = oWrap.getElementsByTagName('div');
+			const	len = 110;
+			let	str = '';
+			// for(let i = 0; i < len; i++){
+			// 	str += '<div style="opacity: 0.2; transition: 0.5s; width: 50px; height: 50px; position: absolute; top: '
+      //   + Math.floor(i / 10) * 52 + 'px; left: '
+      //   + i % 10 * 52 + 'px; background: url(../../images/reveal.jpg) '
+      //   + (-i % 10 * 52) + 'px '
+      //   + (-Math.floor(i / 10) * 52) + 'px"></div>';
+			// }
+			// oWrap.innerHTML = str;
+      // const oFragment = document.createFragment();
+      for (let i = 0; i < len; i++) {
+        let oDiv = document.createElement("div");
+        oDiv.classList.add("tile");
+        oDiv.style.top = Math.floor(i / 10) * 52 + "px";
+        oDiv.style.left = i % 10 * 52 + "px";
+        oDiv.style.background = `url(../../images/reveal.jpg) ${-i % 10 * 52}px ${-Math.floor(i / 10) * 52}px`;
+        oWrap.append(oDiv);
+      }
+
+			for(let i = 0; i < aDiv.length; i++){
+				// aDiv[i].onmouseover = function(){
+				// 	this.style.opacity = 1;
+				// 	this.style.transform = 'scale(1.5)';
+				// }
+				// aDiv[i].onmouseout = function(){
+				// 	this.style.transform = 'scale(1)';
+				// }
+			}
+
+      oWrap.onmouseover = function(e) {
+        e.target.style.opacity = 1;
+        e.target.style.transform = 'scale(1.5)';
+      }
+      oWrap.onmouseout = function(e) {
+        e.target.style.transform = 'scale(1)';
+      }
+		}
+	</script>
+</head>
+<body>
+	<div id="wrap">
+	</div>
+</body>
